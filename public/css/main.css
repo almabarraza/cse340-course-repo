@@ -147,6 +147,10 @@ footer {
     font-size: 0.9rem;
 }
 
+.text-left {
+    text-align: left;
+}
+
 /* Media Queries for Mobile Responsiveness */
 @media (max-width: 600px) {
     nav ul {
