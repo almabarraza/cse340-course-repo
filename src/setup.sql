@@ -68,3 +68,74 @@ INSERT INTO service_project (organization_id, title, description, location, date
 -- Verify data insertion
 -- ========================================
 SELECT * FROM service_project;
+
+
+-- =======================================
+-- Category table
+-- =======================================
+CREATE TABLE category (
+category_id SERIAL PRIMARY KEY,
+name VARCHAR(150) NOT NULL UNIQUE
+);
+
+
+-- ========================================
+-- Intermediate Table Project-Category
+-- ========================================
+CREATE TABLE project_category (
+	project_id INTEGER NOT NULL,
+	category_id INTEGER NOT NULL,
+	PRIMARY KEY (project_id, category_id),
+	
+	CONSTRAINT fk_project
+		FOREIGN KEY (project_id)
+		REFERENCES service_project(project_id)
+		ON DELETE CASCADE,
+
+	CONSTRAINT fk_category
+		FOREIGN KEY (category_id)
+		REFERENCES category(category_id)
+		ON DELETE CASCADE
+);
+
+
+-- =========================================
+-- = Insert sample data: Categories        =
+-- =========================================
+INSERT INTO category (name) VALUES
+('Enviroment'),
+('Food Security'),
+('Education');
+
+
+-- =========================================
+-- = Relate projects with categories       =
+-- =========================================
+INSERT INTO project_category (project_id, category_id) VALUES
+(1, 1), 
+(1, 3),
+(2, 2), 
+(3, 3),
+(4, 2),
+(5, 1),
+(6, 2),
+(7, 3),
+(8, 1),
+(9, 3),
+(10, 1),
+(11, 2),
+(12, 1),
+(13, 2),
+(14, 3),
+(15, 3);
+
+-- ========================================
+-- Verify data insertion
+-- ========================================
+SELECT * FROM category;
+
+
+-- ========================================
+-- Verify data insertion
+-- ========================================
+SELECT * FROM project_category;
