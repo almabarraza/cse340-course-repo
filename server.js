@@ -47,7 +47,6 @@ app.use((req, res, next) => {
 // Use the imported router to handle routes
 app.use(router);
 
-
 // Catch-all route for 404 errors
 app.use((req, res, next) => {
     const err = new Error('Page Not Found');
