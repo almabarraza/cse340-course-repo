@@ -10,4 +10,4 @@ const getAllCategories = async () => {
 
 }
 
-export { getAllCategories }
+export { getAllCategories };
