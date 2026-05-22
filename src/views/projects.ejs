@@ -10,10 +10,19 @@
             <ul class="text-left">
                 <% projects.forEach(project=> { %>
                     <li>
+                        <!-- 1. Fecha formateada -->
                         <%= new Date(project.date).toLocaleDateString('en-US', { weekday: 'long' , year: 'numeric' ,
                             month: 'long' , day: 'numeric' }) %>:
-                            <%= project.title %>
-                                (<%= project.organization_name %>)
+
+                            <!-- 2. Enlace a los detalles del proyecto usando su ID -->
+                            <a href="/project/<%= project.project_id %>">
+                                <%= project.title %>
+                            </a>
+
+                            <!-- 3. Enlace a los detalles de la organización usando su ID -->
+                            (<a href="/organization/<%= project.organization_id %>">
+                                <%= project.name %>
+                            </a>)
                     </li>
                     <% }); %>
             </ul>
