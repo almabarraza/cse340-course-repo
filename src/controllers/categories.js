@@ -1,5 +1,6 @@
 //import model needed
-import { getAllCategories } from '../models/categories.js';
+import { getAllCategories, getCategoryDetails } from '../models/categories.js';
+import { getProjectsByCategory } from '../models/projects.js';
 
 //Define controller function
 const showCategoriesPage = async (req, res) => {
@@ -11,5 +12,17 @@ const showCategoriesPage = async (req, res) => {
     res.render('categories', { title, categories });
 };
 
+//Function to call category details
+const showCategoryDetailsPage = async (req, res) => {
+    const title = 'Category Details';
+    const categoryId = req.params.id;
+    const categoryDetails = await getCategoryDetails(categoryId);
+    const projectByCategory = await getProjectsByCategory(categoryId);
+
+    res.render('category', { title, categoryDetails, projectByCategory });
+};
+
+
+
 //Export controller function
-export { showCategoriesPage };
+export { showCategoriesPage, showCategoryDetailsPage };
