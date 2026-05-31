@@ -3,11 +3,11 @@ import express from 'express';
 import { showHomePage } from './controllers/index.js';
 import { showOrganizationsPage, processNewOrganizationForm } from './controllers/organizations.js';
 import { processNewProjectForm, showNewProjectForm, showProjectsPage, projectValidation } from './controllers/projects.js';
-import { showCategoriesPage, showCategoryDetailsPage } from './controllers/categories.js';
+import { showCategoriesPage, showCategoryDetailsPage, showNewCategoryForm, processNewCategoryForm, categoryValidation } from './controllers/categories.js';
 import { testErrorPage } from './controllers/errors.js';
 import { showOrganizationDetailsPage, showNewOrganizationForm, organizationValidation, showEditOrganizationForm, processEditOrganizationForm } from './controllers/organizations.js';
 import { showProjectDetailsPage, showEditProjectForm, processEditProjectForm } from './controllers/projects.js';
-import { showAssignCategoriesForm, processAssignCategoriesForm } from './controllers/categories.js';
+import { showAssignCategoriesForm, processAssignCategoriesForm, showEditCategoryForm, processEditCategoryForm } from './controllers/categories.js';
 
 const router = express.Router();
 
@@ -40,6 +40,14 @@ router.post('/assign-categories/:projectId', processAssignCategoriesForm);
 router.get('/edit-project/:id', showEditProjectForm);
 // Route to edit server project
 router.post('/edit-project/:id', processEditProjectForm);
+// Route for category page
+router.get('/new-category', showNewCategoryForm);
+// Route to handle new category form submission
+router.post('/new-category', processNewCategoryForm);
+// Route to display the edith category form
+router.get('/edit-category/:id', categoryValidation, showEditCategoryForm);
+// Route to handle the edit category form
+router.post('/edit-category/:id', categoryValidation, processEditCategoryForm);
 
 // error-handling routes
 router.get('/test-error', testErrorPage);

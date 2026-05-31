@@ -8,6 +8,8 @@
             <%= categoryDetails.name %>
         </h2>
 
+        <p><a href="/edit-category/<%=categoryDetails.category_id %>">Edit Category</a></p>
+
         <strong>Service Projects:</strong>
         <ul>
             <% projectByCategory.forEach(project=> { %>
