@@ -6,8 +6,8 @@ import { updateCategoryAssignments, updateCategory } from '../models/categories.
 import { body, validationResult } from 'express-validator';
 
 
-// Define validation and sanitization rules for organization form
-// Define validation rules for organization form
+// Define validation and sanitization rules for category form
+// Define validation rules for category form
 const categoryValidation = [
     body('name')
         .trim()
