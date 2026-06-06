@@ -8,6 +8,8 @@ import { testErrorPage } from './controllers/errors.js';
 import { showOrganizationDetailsPage, showNewOrganizationForm, organizationValidation, showEditOrganizationForm, processEditOrganizationForm } from './controllers/organizations.js';
 import { showProjectDetailsPage, showEditProjectForm, processEditProjectForm } from './controllers/projects.js';
 import { showAssignCategoriesForm, processAssignCategoriesForm, showEditCategoryForm, processEditCategoryForm } from './controllers/categories.js';
+import { showUserRegistrationForm, processUserRegistrationForm, showLoginForm, processLoginForm, processLogout } from './controllers/users.js';
+
 
 const router = express.Router();
 
@@ -48,6 +50,16 @@ router.post('/new-category', processNewCategoryForm);
 router.get('/edit-category/:id', categoryValidation, showEditCategoryForm);
 // Route to handle the edit category form
 router.post('/edit-category/:id', categoryValidation, processEditCategoryForm);
+// User registration routes
+router.get('/register', showUserRegistrationForm);
+router.post('/register', processUserRegistrationForm);
+//User login routes
+//Calls to show login form
+router.get('/login', showLoginForm);
+//Route to handle login
+router.post('/login', processLoginForm);
+//Route to show login out
+router.get('/logout', processLogout);
 
 // error-handling routes
 router.get('/test-error', testErrorPage);

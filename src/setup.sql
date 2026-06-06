@@ -139,3 +139,52 @@ SELECT * FROM category;
 -- Verify data insertion
 -- ========================================
 SELECT * FROM project_category;
+
+-- ========================================
+-- Roles Table
+-- ========================================
+CREATE TABLE roles (
+role_id SERIAL PRIMARY KEY,
+role_name VARCHAR(50) NOT NULL UNIQUE,
+role_description TEXT NOT NULL 
+);
+
+-- ========================================
+-- Verify roles table
+-- ========================================
+SELECT * FROM roles;
+
+
+-- ========================================
+-- Insert data to roles table
+-- ========================================
+INSERT INTO roles (role_name, role_description)
+VALUES ('user', 'Standard user with basic access'),
+		('admin', 'Administrador with full system access');
+
+
+
+-- ========================================
+-- Verify roles table inserted data
+-- ========================================
+SELECT * FROM roles;
+
+
+-- ========================================
+-- Users Table
+-- ========================================
+CREATE TABLE users (
+user_id SERIAL PRIMARY KEY,
+name VARCHAR(100) NOT NULL,
+email VARCHAR(100) UNIQUE NOT NULL,
+password_hash VARCHAR(255) NOT NULL,
+role_id INTEGER REFERENCES roles(role_id), 
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+-- ========================================
+-- Verify user table 
+-- ========================================
+SELECT * FROM users;
+
