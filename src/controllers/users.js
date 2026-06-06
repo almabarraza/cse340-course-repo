@@ -52,7 +52,7 @@ const processLoginForm = async (req, res) => {
                 console.log('User logged in:', user);
             }
 
-            res.redirect('/');
+            res.redirect('/dashboard');
         } else {
             req.flash('error', 'Login failed');
             res.redirect('/login');
@@ -92,6 +92,23 @@ const processLogout = async (req, res) => {
     });
 };
 
+const requireLogin = (req, res, next) => {
+    if (!req.session || !req.session.user) {
+        req.flash('error', 'You must be logged in to access that page.');
+        return res.redirect('/login');
+    }
+    next();
+};
+
+
+const showDashboard = (req, res) => {
+    const title = 'Dashboard';
+    const { name, email } = req.session.user;
+    res.render('dashboard', { title, name, email });
+
+};
+
+
 
 
 export {
@@ -99,5 +116,7 @@ export {
     processUserRegistrationForm,
     showLoginForm,
     processLoginForm,
-    processLogout
+    processLogout,
+    requireLogin,
+    showDashboard
 };

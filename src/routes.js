@@ -8,7 +8,7 @@ import { testErrorPage } from './controllers/errors.js';
 import { showOrganizationDetailsPage, showNewOrganizationForm, organizationValidation, showEditOrganizationForm, processEditOrganizationForm } from './controllers/organizations.js';
 import { showProjectDetailsPage, showEditProjectForm, processEditProjectForm } from './controllers/projects.js';
 import { showAssignCategoriesForm, processAssignCategoriesForm, showEditCategoryForm, processEditCategoryForm } from './controllers/categories.js';
-import { showUserRegistrationForm, processUserRegistrationForm, showLoginForm, processLoginForm, processLogout } from './controllers/users.js';
+import { showUserRegistrationForm, processUserRegistrationForm, showLoginForm, processLoginForm, processLogout, showDashboard, requireLogin } from './controllers/users.js';
 
 
 const router = express.Router();
@@ -60,6 +60,10 @@ router.get('/login', showLoginForm);
 router.post('/login', processLoginForm);
 //Route to show login out
 router.get('/logout', processLogout);
+//Protected dashboard route
+router.get('/dashboard', requireLogin, showDashboard);
+
+
 
 // error-handling routes
 router.get('/test-error', testErrorPage);
