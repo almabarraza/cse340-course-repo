@@ -8,7 +8,7 @@ import { testErrorPage } from './controllers/errors.js';
 import { showOrganizationDetailsPage, showNewOrganizationForm, organizationValidation, showEditOrganizationForm, processEditOrganizationForm } from './controllers/organizations.js';
 import { showProjectDetailsPage, showEditProjectForm, processEditProjectForm } from './controllers/projects.js';
 import { showAssignCategoriesForm, processAssignCategoriesForm, showEditCategoryForm, processEditCategoryForm } from './controllers/categories.js';
-import { showUserRegistrationForm, processUserRegistrationForm, showLoginForm, processLoginForm, processLogout, showDashboard, requireLogin, requireRole } from './controllers/users.js';
+import { showUserRegistrationForm, processUserRegistrationForm, showLoginForm, processLoginForm, processLogout, showDashboard, requireLogin, requireRole, showRegisteredUsers } from './controllers/users.js';
 
 
 const router = express.Router();
@@ -62,7 +62,8 @@ router.post('/login', processLoginForm);
 router.get('/logout', processLogout);
 //Protected dashboard route
 router.get('/dashboard', requireLogin, showDashboard);
-
+//Route to display all registered users to admin only
+router.get('/registered-users', requireLogin, showRegisteredUsers);
 
 
 // error-handling routes
