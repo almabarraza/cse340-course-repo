@@ -188,3 +188,19 @@ created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 -- ========================================
 SELECT * FROM users;
 
+-- ========================================
+-- Create user_project table to volunteers
+-- ========================================
+CREATE TABLE user_project (
+    user_id INT REFERENCES users(user_id) ON DELETE CASCADE,
+    project_id INT REFERENCES service_project(project_id) ON DELETE CASCADE,
+    registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    -- Compound primary key to avoid duplicated registers
+    PRIMARY KEY (user_id, project_id) 
+);
+
+
+-- ========================================
+-- Verify user_project table
+-- ========================================
+SELECT * FROM user_project;

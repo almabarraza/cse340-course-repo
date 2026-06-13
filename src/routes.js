@@ -1,15 +1,13 @@
 import express from 'express';
 
+// Compact imports to fix the TypeScript validator 'from' expected error
 import { showHomePage } from './controllers/index.js';
-import { showOrganizationsPage, processNewOrganizationForm } from './controllers/organizations.js';
-import { processNewProjectForm, showNewProjectForm, showProjectsPage, projectValidation } from './controllers/projects.js';
-import { showCategoriesPage, showCategoryDetailsPage, showNewCategoryForm, processNewCategoryForm, categoryValidation } from './controllers/categories.js';
 import { testErrorPage } from './controllers/errors.js';
-import { showOrganizationDetailsPage, showNewOrganizationForm, organizationValidation, showEditOrganizationForm, processEditOrganizationForm } from './controllers/organizations.js';
-import { showProjectDetailsPage, showEditProjectForm, processEditProjectForm } from './controllers/projects.js';
-import { showAssignCategoriesForm, processAssignCategoriesForm, showEditCategoryForm, processEditCategoryForm } from './controllers/categories.js';
+import { chooseVolunteerProject, removeVolunteerProject } from './controllers/volunteers.js';
+import { showOrganizationsPage, showOrganizationDetailsPage, showNewOrganizationForm, processNewOrganizationForm, organizationValidation, showEditOrganizationForm, processEditOrganizationForm } from './controllers/organizations.js';
+import { processNewProjectForm, showNewProjectForm, showProjectsPage, projectValidation, showProjectDetailsPage, showEditProjectForm, processEditProjectForm } from './controllers/projects.js';
+import { showCategoriesPage, showCategoryDetailsPage, showNewCategoryForm, processNewCategoryForm, categoryValidation, showAssignCategoriesForm, processAssignCategoriesForm, showEditCategoryForm, processEditCategoryForm } from './controllers/categories.js';
 import { showUserRegistrationForm, processUserRegistrationForm, showLoginForm, processLoginForm, processLogout, showDashboard, requireLogin, requireRole, showRegisteredUsers } from './controllers/users.js';
-
 
 const router = express.Router();
 
@@ -64,7 +62,10 @@ router.get('/logout', processLogout);
 router.get('/dashboard', requireLogin, showDashboard);
 //Route to display all registered users to admin only
 router.get('/registered-users', requireLogin, showRegisteredUsers);
-
+// Route to handle adding a volunteer to a project
+router.get('/projects/choose-volunteer/:id', requireLogin, chooseVolunteerProject);
+// Route to handle removing a volunteer from a project
+router.get('/projects/remove-volunteer/:id', requireLogin, removeVolunteerProject);
 
 // error-handling routes
 router.get('/test-error', testErrorPage);

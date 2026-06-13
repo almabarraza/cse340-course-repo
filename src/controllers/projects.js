@@ -4,6 +4,7 @@ import { getCategoriesByServiceProject } from '../models/categories.js';
 import { getAllOrganizations } from '../models/organizations.js';
 import { body, validationResult } from 'express-validator';
 import { updateProject } from "../models/projects.js";
+import { showVolunteerProjects } from "../models/volunteers.js";
 
 
 const NUMBER_OF_UPCOMING_PROJECTS = 5;
@@ -42,15 +43,45 @@ const showProjectsPage = async (req, res) => {
     res.render('projects', { title, projects });
 };
 
-//Controller function to show details service project
-const showProjectDetailsPage = async (req, res) => {
-    const title = 'Service Project Details';
-    const projectId = req.params.id;
-    const categoryProject = await getCategoriesByServiceProject(projectId);
-    const projectDetails = await getProjectDetails(projectId);
 
-    res.render('project', { title, projectDetails, categoryProject })
+// Controller function to show details service project
+const showProjectDetailsPage = async (req, res) => {
+    try {
+        const title = 'Service Project Details';
+        const projectId = req.params.id;
+
+        const categoryProject = await getCategoriesByServiceProject(projectId);
+        const projectDetails = await getProjectDetails(projectId);
+
+        // Initialize variables by default
+        let isVolunteering = false;
+        const user = req.session && req.session.user ? req.session.user : null;
+
+        // If the user is logged in, check if they are volunteering for this project
+        if (user) {
+            const userId = user.user_id;
+            const userProjects = await showVolunteerProjects(userId);
+
+            // Verify if the current project ID matches any project the user joined
+            isVolunteering = userProjects.some(p => p.project_id === parseInt(projectId));
+        }
+
+        // Send all variables to the EJS view
+        res.render('project', {
+            title,
+            projectDetails,
+            categoryProject,
+            isVolunteering,
+            user
+        });
+
+    } catch (error) {
+        console.error('Error fetching project details:', error);
+        req.flash('error', 'Could not load project details. Please try again.');
+        return res.redirect('/projects');
+    }
 };
+
 
 const showNewProjectForm = async (req, res) => {
     const title = 'Add New Service Project';

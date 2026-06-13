@@ -48,6 +48,21 @@
                     <a href="/assign-categories/<%= projectDetails.project_id %>">Edit Categories</a>
                     <% } %>
 
+                        <!-- NEW CONDITIONAL VOLUNTEER SECTION -->
+                        <% if (user) { %>
+                            <div>
+                                <% if (isVolunteering) { %>
+                                    <!-- Message and link when the user IS already a volunteer -->
+                                    <p>You are volunteering for this project</p>
+                                    <p><a href="/projects/remove-volunteer/<%= projectDetails.project_id %>">Remove
+                                            myself as a volunteer</a></p>
+                                    <% } else { %>
+                                        <!-- Link when the user is logged in but NOT a volunteer yet -->
+                                        <p><a href="/projects/choose-volunteer/<%= projectDetails.project_id %>">Volunteer
+                                                for this project</a></p>
+                                        <% } %>
+                            </div>
+                            <% } %>
 
     </main>
 

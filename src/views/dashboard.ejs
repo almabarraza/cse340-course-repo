@@ -12,8 +12,37 @@
         </p>
 
         <% if (user && user.role_name==='admin' ) { %>
-            <a href="/registered-users">Registered Users</a>
+            <p><a href="/registered-users">Registered Users</a></p>
             <% } %>
+
+
+                <h2>Your Volunteer Projects</h2>
+
+                <% if (projects.length===0) { %>
+                    <p>You haven't signed up for any volunteer projects yet. <a href="/projects">Browse projects
+                            here</a>.</p>
+                    <% } else { %>
+                        <ul class="volunteer-dashboard-list">
+                            <% projects.forEach(project=> { %>
+                                <li>
+                                    <div>
+                                        <strong>
+                                            <%= project.title %>
+                                        </strong>
+                                        <span class="enroll-date">(Enrolled on: <%= new
+                                                Date(project.registered_at).toLocaleDateString() %>)</span>
+                                    </div>
+
+                                    <!-- Enlace dinámico con los estilos aplicados -->
+                                    <a href="/projects/remove-volunteer/<%= project.project_id %>"
+                                        class="btn-remove-dashboard"
+                                        onclick="return confirm('Are you sure you want to stop volunteering for this project?');">
+                                        Stop Volunteering
+                                    </a>
+                                </li>
+                                <% }); %>
+                        </ul>
+                        <% } %>
 
     </main>
 
